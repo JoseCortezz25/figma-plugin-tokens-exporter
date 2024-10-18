@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      '@common': path.resolve('src/common'),
+      '@libs': path.resolve('src/libs'),
       '@ui': path.resolve('src/ui')
     }
   }

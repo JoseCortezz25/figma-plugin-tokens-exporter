@@ -1,4 +1,4 @@
-export enum Languaje {
+export enum Language {
   JSON = 'json',
   SASS = 'sass',
   CSS = 'css',
@@ -12,7 +12,8 @@ export enum Casing {
   PASCAL = 'pascal',
   CAPITAL = 'capital',
   DOT = 'dot',
-  PARAM = 'param'
+  PARAM = 'param',
+  SNAKE = 'snake'
 };
 
 export enum Model {
@@ -21,9 +22,19 @@ export enum Model {
   HEX = 'hex'
 };
 
+export type Values = {
+  language?: Language;
+  casing?: Casing;
+  model?: Model;
+};
+
 export type Color = {
   name: string;
-  color: string;
+  // color: string;
+  r: number;
+  g: number;
+  b: number;
+  a: number;
 };
 
 export enum PluginMessageType {

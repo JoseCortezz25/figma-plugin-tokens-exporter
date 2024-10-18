@@ -1,9 +1,6 @@
-import { initializeNetwork } from '@common/network/init';
-import { NetworkSide } from '@common/network/sides';
-import { PluginMessageType } from '@ui/libs/types';
+import { PluginMessageType } from '../libs/types';
 
 async function initializePlugin() {
-  initializeNetwork(NetworkSide.PLUGIN);
 
   figma.showUI(__html__, {
     width: 400,
@@ -24,7 +21,11 @@ async function initializePlugin() {
       if (paintStyle.paints[0].type === 'SOLID') {
         return {
           name: paintStyle.name,
-          color: `rgba(${(paintStyle.paints[0].color.r * 255).toFixed(2)}, ${(paintStyle.paints[0].color.g * 255).toFixed(2)}, ${(paintStyle.paints[0].color.b * 255).toFixed(2)}, ${paintStyle.paints[0].opacity})`
+          r: paintStyle.paints[0].color.r * 255,
+          g: paintStyle.paints[0].color.g * 255,
+          b: paintStyle.paints[0].color.b * 255,
+          a: paintStyle.paints[0].opacity
+          // color: `rgba(${(paintStyle.paints[0].color.r * 255).toFixed(2)}, ${(paintStyle.paints[0].color.g * 255).toFixed(2)}, ${(paintStyle.paints[0].color.b * 255).toFixed(2)}, ${paintStyle.paints[0].opacity})`
         };
       }
     });
