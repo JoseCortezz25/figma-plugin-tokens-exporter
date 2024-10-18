@@ -16,6 +16,9 @@
       "./node_modules/@figma"
     ],
     "paths": {
+      "@libs/*": [
+        "./src/libs/*"
+      ],
       "@common/*": [
         "./src/common/*"
       ],

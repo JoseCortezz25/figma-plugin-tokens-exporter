@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      '@common': path.resolve('src/common'),
+      '@libs': path.resolve('src/libs'),
       '@plugin': path.resolve('src/plugin')
     }
   }
