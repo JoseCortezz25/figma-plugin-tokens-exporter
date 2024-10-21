@@ -25,18 +25,22 @@ async function initializePlugin() {
           g: paintStyle.paints[0].color.g * 255,
           b: paintStyle.paints[0].color.b * 255,
           a: paintStyle.paints[0].opacity
-          // color: `rgba(${(paintStyle.paints[0].color.r * 255).toFixed(2)}, ${(paintStyle.paints[0].color.g * 255).toFixed(2)}, ${(paintStyle.paints[0].color.b * 255).toFixed(2)}, ${paintStyle.paints[0].opacity})`
         };
       }
     });
 
-    console.log("Colors", colors);
 
     figma.ui.postMessage({
       type: PluginMessageType.EXTRACT_TO_TOKENS,
       colors: colors
     });
   });
+
+  figma.ui.onmessage = (msg) => {
+    if (msg.type === PluginMessageType.NOTIFY) {
+      figma.notify(msg.message);
+    }
+  };
 }
 
 initializePlugin();

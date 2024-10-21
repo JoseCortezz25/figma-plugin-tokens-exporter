@@ -40,7 +40,7 @@ function App() {
   };
 
   const onCopyButtonClick = () => {
-    htmlToCopyRef.current = "In this place, the colors will be copied.";
+    htmlToCopyRef.current = result;
     document.execCommand("copy");
 
     postMessageToPlugin("Copied to clipboard.");
@@ -221,7 +221,7 @@ function App() {
             Code Preview
           </h2>
           <Textarea
-            defaultValue={result}
+            value={result} // Cambiado de defaultValue a value
             className="bg-neutral-100 w-full min-h-[300px] max-h-[300px] border-none outline-none focus:ring-0 focus-visible:ring-0"
           />
         </div>
