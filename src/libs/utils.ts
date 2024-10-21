@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatName = (name: string): string => {
-  return name.replace(/[()]/g, "").replace(/[^a-zA-Z0-9]/g, "_");
+  return name.replace(/[()]/g, "").replaceAll('/', "").replace(/[^a-zA-Z0-9/]/g, "_");
 };
 
 const getIntroAndOutro = (config: Values) => {
@@ -35,7 +35,7 @@ const getIntroAndOutro = (config: Values) => {
 };
 
 const getFormatCasing = (name: string, config: Values) => {
-  const formatName = name.replace(/[()]/g, "");
+  const formatName = name.replace(/[()/]/g, "");
 
   switch (config.casing) {
     case "camel":

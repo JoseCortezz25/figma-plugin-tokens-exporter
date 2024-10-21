@@ -24,18 +24,11 @@ export default tseslint.config(
     },
     plugins: {
       prettier: prettier
-      // 'react-hooks': reactHooks,
-      // 'react-refresh': reactRefresh,
     },
     rules: {
-      // ...reactHooks.configs.recommended.rules,
-      // 'react-refresh/only-export-components': [
-      //   'warn',
-      //   { allowConstantExport: true },
-      // ],
       'jsx-quotes': ['error', 'prefer-double'],
       semi: [2, 'always'],
-      'space-before-function-paren': ['error', 'never'],
+      'space-before-function-paren': 'off',
       camelcase: [
         'error',
         {
