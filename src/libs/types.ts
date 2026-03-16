@@ -37,6 +37,12 @@ export type Color = {
   a: number;
 };
 
+export enum ExtractionMethod {
+  STYLES = 'styles',
+  VARIABLES = 'variables',
+  BOTH = 'both'
+}
+
 export enum PluginMessageType {
   EXTRACT_TO_HTML = "extract-to-html",
   SELECTION_CHANGE = "selection-change",
@@ -44,4 +50,5 @@ export enum PluginMessageType {
   NOTIFY = "notify",
   EXTRACT_TO_TOKENS = "extract-tokens",
   EXTRACT_TO_FONT = "extract-font",
+  SET_EXTRACTION_METHOD = "set-extraction-method",
 }
