@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useReducer } from 'react';
 import { Button } from '@ui/components/ui/button';
-import { Casing, Language, Model, PluginMessageType } from '../libs/types';
+import { Casing, ExtractionMethod, Language, Model, PluginMessageType } from '../libs/types';
 import { RadioGroup, RadioGroupItem } from './components/ui/radio-group';
 import { Label } from './components/ui/label';
 import { Textarea } from './components/ui/textarea';
@@ -13,6 +13,7 @@ import reducerForm, { ActionType } from './hooks/use-form';
 function App() {
   const [colors, setColors] = useState<Color[]>([]);
   const [result, setResult] = useState<string>("");
+  const [extractionMethod, setExtractionMethod] = useState<ExtractionMethod>(ExtractionMethod.STYLES);
   const htmlToCopyRef = useRef<string | undefined>();
   const initialState = {
     values: {
@@ -46,6 +47,16 @@ function App() {
     postMessageToPlugin("Copied to clipboard.");
   };
 
+  const onExtractionMethodChange = (method: ExtractionMethod) => {
+    setExtractionMethod(method);
+    parent.postMessage({
+      pluginMessage: {
+        type: PluginMessageType.SET_EXTRACTION_METHOD,
+        method
+      }
+    }, '*');
+  };
+
   onmessage = async (event: MessageEvent) => {
     const pluginMessage = event.data.pluginMessage;
 
@@ -56,19 +67,36 @@ function App() {
   };
 
   const generate = (colors: Color[]) => {
-    console.log("Generating code...");
-    console.log("Colors: ", colors);
-    console.log("State: ", state.values);
-
     const result = getFormatCode(colors as Color[], state.values);
     setResult(result);
-    console.log("Result: ", result);
-
   };
 
   return (
     <section className="px-3 my-6 flex flex-col gap-7">
       <div className="flex flex-col gap-4">
+
+        <div className="flex flex-col gap-2">
+          <h2 className="font-bold text-[15px] capitalize">Extraction Source</h2>
+          <RadioGroup
+            className="grid grid-cols-3 gap-2"
+            defaultValue={extractionMethod}
+            onValueChange={(value) => onExtractionMethodChange(value as ExtractionMethod)}
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value={ExtractionMethod.STYLES} id="styles" />
+              <Label htmlFor="styles">Local Styles</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value={ExtractionMethod.VARIABLES} id="variables" />
+              <Label htmlFor="variables">Variables</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value={ExtractionMethod.BOTH} id="both" />
+              <Label htmlFor="both">Both</Label>
+            </div>
+          </RadioGroup>
+        </div>
+
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-[15px] capitalize">Color Selection</h2>
           {colors.length > 0 ? (
@@ -221,7 +249,7 @@ function App() {
             Code Preview
           </h2>
           <Textarea
-            value={result} // Cambiado de defaultValue a value
+            value={result}
             className="bg-neutral-100 w-full min-h-[300px] max-h-[300px] border-none outline-none focus:ring-0 focus-visible:ring-0"
           />
         </div>
